@@ -25,28 +25,51 @@ If string === -v || --verson : return version string.
 
 if string === -h || --help : return directions.*/
 
+
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
-let bob = process.argv.slice(2);
+let calcnums = process.argv.slice(2);
+let calcStart = () => {
 
-let counter = 0;
+if (calcnums == "-v" || calcnums == "-version") {
+  console.log("Version 1.0.0")
+
+  process.exit()
+} else if (calcnums == "-h" || calcnums == "-help"){
+  console.log("enter either add, sub, mult, div plus the number(s) that you would like to calculate")
+  process.exit()
+} else {
+
+}
+
+
+}
+
 
 let result = 0;
 
-let george = (str, a, b) => {
-  if (counter === 0) {
-    console.log(bob.unshift());
-    a = bob.unshift();
-    b = bob.unshift();
-  } else if (bob.length > 0 && counter > 0) {
-    str = bob.unshift();
-    b = bob.unshift();
-  }
 
-  switch (bob[2]) {
+let calc = () => {
+    
+    let str = calcnums.shift();
+    let a = parseInt(calcnums.shift());
+    let b = parseInt(calcnums.shift());
+    calculate(str,a,b)
+
+  
+
+
+  process.stdout.setEncoding('utf8');
+  process.stdout.on('data', result => console.log(result));
+};
+
+
+function calculate(str,a,b) {
+switch (str) {
     case 'add':
       result = a + b;
-      counter += 1;
+      
+    
       break;
     case 'sub':
       result = a - b;
@@ -60,9 +83,18 @@ let george = (str, a, b) => {
       result = a * b;
       counter += 1;
     default:
-      console.log('Invalid math input');
+      console.log(str, 'Invalid math input');
+    }
+    if (calcnums.length > 0 ) {
+      nextone()
+    } else { 
+      console.log(result)}
   }
-  switch (bob[2]) {
+
+  function nextone() {
+  let str = calcnums.shift();
+  let b = parseInt(calcnums.shift())
+  switch (str) {
     case 'add':
       result += b;
       break;
@@ -77,8 +109,11 @@ let george = (str, a, b) => {
     default:
       console.log('Invalid math input');
   }
-  process.stdout.setEncoding('utf8');
-  process.stdout.on('data', result => console.log(result));
-};
+  if (calcnums.length > 0) {
+    nextone()
+  } else {
+    console.log(result)
+  }
+}
 
-george();
+calcStart();
